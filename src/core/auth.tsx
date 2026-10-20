@@ -4,7 +4,7 @@ import { useQuery, useQueryClient, type QueryClient } from '@tanstack/react-quer
 import { useRouter } from 'expo-router';
 import { keys } from '../hooks/keys';
 import { pauseDevice, restorePush } from '../lib/push';
-import { dataService, sessionService } from '../services';
+import { dataService, sessionService, ServiceError } from '../services';
 import { NewPasswordScreen, SignInScreen } from '../screens/SignIn';
 import type { Profile } from '../types';
 import { color } from '../ui';
@@ -101,6 +101,12 @@ export function AuthGate({ children }: { children: ReactNode }) {
         <ActivityIndicator color={color.brand} />
       </View>
     );
-  if (me.isError) return <SignInScreen />;
+  // Not signed in (or signed out/expired) is expected and sends people to the sign-in screen; any
+  // other failure — like the backend itself failing to initialize — is unexpected and should be
+  // visible, so it is thrown here, where the error boundary can show what actually broke.
+  if (me.isError) {
+    if (me.error instanceof ServiceError) return <SignInScreen />;
+    throw me.error;
+  }
   return <MeContext.Provider value={me.data}>{children}</MeContext.Provider>;
 }

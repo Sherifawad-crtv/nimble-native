@@ -1,16 +1,24 @@
 import type { DataService, SessionService } from './DataService';
 import { MockDataService } from './mock/MockDataService';
-import { createSupabase } from './supabase/client';
-import { SupabaseDataService } from './supabase/SupabaseDataService';
-import { SupabaseSession } from './supabase/SupabaseSession';
-import { redirectUrl } from './supabase/client';
 
 const url = process.env.EXPO_PUBLIC_SUPABASE_URL as string | undefined;
 const key = process.env.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY as string | undefined;
 
-/** Supabase when the project is configured; otherwise the local demo backend with seeded accounts. */
+/**
+ * Supabase when the project is configured; otherwise the local demo backend with seeded accounts.
+ *
+ * The Supabase modules are pulled in with `require()`, not a static top-level `import`, and
+ * deliberately so: a static `import` is hoisted and evaluated before any of this file's own code
+ * runs, so a throw during `@supabase/supabase-js`'s own module setup (or any of its dependencies')
+ * would happen before the try/catch below even exists — crashing before React mounts, with no error
+ * boundary around to catch it and show what broke. `require()` is an ordinary function call, made
+ * from inside the try block, so it is genuinely caught.
+ */
 function pick(): { data: DataService; session: SessionService } {
   if (url && key) {
+    const { createSupabase, redirectUrl } = require('./supabase/client') as typeof import('./supabase/client');
+    const { SupabaseDataService } = require('./supabase/SupabaseDataService') as typeof import('./supabase/SupabaseDataService');
+    const { SupabaseSession } = require('./supabase/SupabaseSession') as typeof import('./supabase/SupabaseSession');
     const sb = createSupabase(url, key);
     return { data: new SupabaseDataService(sb), session: new SupabaseSession(sb, redirectUrl()) };
   }
@@ -18,10 +26,8 @@ function pick(): { data: DataService; session: SessionService } {
   return { data: mock, session: mock };
 }
 
-// `pick()` constructs native modules (Supabase, AsyncStorage, URL polyfill) at import time, before
-// React has mounted — a throw here would crash before our error boundary exists to catch it and
-// show what broke. So any failure here is swallowed, and `dataService`/`sessionService` fall back
-// to proxies that re-throw it lazily, the first time something actually touches them from inside a
+// A throw inside `pick()` is swallowed, and `dataService`/`sessionService` fall back to proxies
+// that re-throw it lazily, the first time something actually touches them from inside a
 // component — by then the error boundary is mounted and can show the real message.
 let backend: { data: DataService; session: SessionService };
 let initError: unknown = null;
