@@ -18,9 +18,33 @@ function pick(): { data: DataService; session: SessionService } {
   return { data: mock, session: mock };
 }
 
-const backend = pick();
+// `pick()` constructs native modules (Supabase, AsyncStorage, URL polyfill) at import time, before
+// React has mounted — a throw here would crash before our error boundary exists to catch it and
+// show what broke. So any failure here is swallowed, and `dataService`/`sessionService` fall back
+// to proxies that re-throw it lazily, the first time something actually touches them from inside a
+// component — by then the error boundary is mounted and can show the real message.
+let backend: { data: DataService; session: SessionService };
+let initError: unknown = null;
+try {
+  backend = pick();
+} catch (e) {
+  initError = e;
+  console.error('Backend initialization failed:', e);
+  const mock = new MockDataService();
+  backend = { data: mock, session: mock };
+}
 
-export const dataService = backend.data;
-export const sessionService = backend.session;
+function guard<T extends object>(obj: T): T {
+  if (!initError) return obj;
+  const error = initError;
+  return new Proxy(obj, {
+    get(): never {
+      throw error instanceof Error ? error : new Error(String(error));
+    },
+  });
+}
+
+export const dataService = guard(backend.data);
+export const sessionService = guard(backend.session);
 export { ServiceError } from './DataService';
 export type { AccountSession, DataService, DemoSession, SessionService, SignUpInput } from './DataService';

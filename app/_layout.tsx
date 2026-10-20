@@ -19,7 +19,12 @@ import { sessionService } from '../src/services';
 import { ToastProvider, color } from '../src/ui';
 
 void SplashScreen.preventAutoHideAsync();
-configureNotifications();
+try {
+  configureNotifications();
+} catch (e) {
+  // Runs before the error boundary exists; notifications not working is never worth a hard crash.
+  console.error('configureNotifications failed:', e);
+}
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { staleTime: 30_000, retry: 1 } } });
 
