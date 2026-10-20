@@ -102,6 +102,9 @@
       "typedRoutes": true
     },
     "owner": "sherifawad",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
     "extra": {
       "router": {
         "asyncRoutes": {
@@ -111,6 +114,9 @@
       "eas": {
         "projectId": "9c983b88-1276-4e01-9e62-8c7c90367a82"
       }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/9c983b88-1276-4e01-9e62-8c7c90367a82"
     }
   }
 }
