@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { View } from 'react-native';
-import { useMe, useSessionActions } from '../app/auth';
+import { useMe, useSessionActions } from '../core/auth';
 import { errorMessage } from '../hooks/data';
 import { t } from '../i18n';
 import { openLink, PRIVACY_URL, SUPPORT_EMAIL, TERMS_URL } from '../lib/links';

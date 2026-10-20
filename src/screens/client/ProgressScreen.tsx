@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { useMe } from '../../app/auth';
+import { useMe } from '../../core/auth';
 import { ExerciseChart } from '../../components/ExerciseChart';
 import { useData } from '../../hooks/data';
 import { keys } from '../../hooks/keys';

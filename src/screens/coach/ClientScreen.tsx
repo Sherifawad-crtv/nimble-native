@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useMe } from '../../app/auth';
+import { useMe } from '../../core/auth';
 import { CalendarView, monthRange } from '../../components/CalendarView';
 import { ProgramBar } from '../../components/CoachOverview';
 import { PackageCard } from '../../components/PackageCard';

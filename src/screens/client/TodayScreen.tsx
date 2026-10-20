@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useMe } from '../../app/auth';
+import { useMe } from '../../core/auth';
 import { NotifyPrompt } from '../../components/NotifyPrompt';
 import { ProgressHero } from '../../components/ProgressHero';
 import { useData } from '../../hooks/data';

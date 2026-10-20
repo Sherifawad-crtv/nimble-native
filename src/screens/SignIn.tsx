@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import * as Linking from 'expo-linking';
-import { useSessionActions } from '../app/auth';
+import { useSessionActions } from '../core/auth';
 import { errorMessage } from '../hooks/data';
 import { t } from '../i18n';
 import { openLink, PRIVACY_URL, TERMS_URL } from '../lib/links';

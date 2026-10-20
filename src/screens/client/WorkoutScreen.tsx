@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AppState, View } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useMe } from '../../app/auth';
+import { useMe } from '../../core/auth';
 import { Comments } from '../../components/Comments';
 import { RestOverlay } from '../../components/RestOverlay';
 import { SetLogger } from '../../components/SetLogger';

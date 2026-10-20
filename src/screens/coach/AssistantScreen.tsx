@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, Pressable, ScrollView, TextInput, View } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useMe } from '../../app/auth';
+import { useMe } from '../../core/auth';
 import { Md } from '../../components/Md';
 import { errorMessage, useAction, useData } from '../../hooks/data';
 import { keys } from '../../hooks/keys';

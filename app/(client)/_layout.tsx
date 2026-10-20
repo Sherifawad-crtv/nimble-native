@@ -1,6 +1,6 @@
 import type { ColorValue } from 'react-native';
 import { Redirect, Tabs } from 'expo-router';
-import { useMe } from '../../src/app/auth';
+import { useMe } from '../../src/core/auth';
 import { t } from '../../src/i18n';
 import { Icon, color, font } from '../../src/ui';
 

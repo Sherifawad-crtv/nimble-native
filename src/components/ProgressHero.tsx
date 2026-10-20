@@ -1,4 +1,4 @@
-import { useMe } from '../app/auth';
+import { useMe } from '../core/auth';
 import { useData } from '../hooks/data';
 import { keys } from '../hooks/keys';
 import { t } from '../i18n';

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Linking, View } from 'react-native';
-import { useMe } from '../app/auth';
+import { useMe } from '../core/auth';
 import { t } from '../i18n';
 import { enablePush, getPushState, optedOut, type PushState } from '../lib/push';
 import { readPref, writePref } from '../lib/prefs';
