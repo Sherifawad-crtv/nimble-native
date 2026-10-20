@@ -1,3 +1,4 @@
+import '../src/core/crashReporter';
 import { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
