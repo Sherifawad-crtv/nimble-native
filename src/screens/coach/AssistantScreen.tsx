@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Easing, Pressable, ScrollView, TextInput, View, type ScrollViewInstance } from 'react-native';
+import { Animated, Easing, Pressable, ScrollView, TextInput, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useMe } from '../../app/auth';
 import { Md } from '../../components/Md';
@@ -73,7 +73,8 @@ export function AssistantScreen() {
   const [draft, setDraft] = useState('');
   const [busy, setBusy] = useState(false);
   const [thinking, setThinking] = useState(false);
-  const scroll = useRef<ScrollViewInstance>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- RN's ScrollView instance type isn't consistently exported across SDK versions.
+  const scroll = useRef<any>(null);
   const exercises = useData(keys.exercises(), (s) => s.listExercises());
   const measured = new Map<string, MeasuredAs>((exercises.data ?? []).map((e) => [e.id, e.measuredAs]));
 

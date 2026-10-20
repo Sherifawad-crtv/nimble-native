@@ -24,7 +24,7 @@ export default function CoachTabs() {
       <Tabs.Screen name="clients" options={{ title: t('nav.clients'), ...tab('users') }} />
       <Tabs.Screen name="library" options={{ title: t('nav.library'), ...tab('book') }} />
       <Tabs.Screen name="workouts" options={{ title: t('nav.workouts'), ...tab('dumbbell') }} />
-      <Tabs.Screen name="assistant" options={{ title: t('nav.assistant'), hidden: sessionService.kind !== 'account', ...tab('sparkle') }} />
+      <Tabs.Screen name="assistant" options={{ title: t('nav.assistant'), href: sessionService.kind === 'account' ? undefined : null, ...tab('sparkle') }} />
       <Tabs.Screen name="settings" options={{ title: t('nav.settings'), ...tab('gear') }} />
     </Tabs>
   );
